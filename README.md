@@ -1,7 +1,16 @@
+[![](https://jitpack.io/v/itsaky/RestDBAuthenticator.svg)](https://jitpack.io/#itsaky/RestDBAuthenticator)
 # RestDBAuthenticator
 This library helps you to authenticate users using restdb.io database.
 
 You will need to setup restdb.io before using this library. Watch [this](http://youtube.com/itsaky) video to learn what & how to setup.
+
+### Download
+Add library to your project using gradle
+```
+implementation 'com.github.itsaky:RestDBAuthenticator:<latest-verison>'
+```
+Replace <latest-version> with the latest release
+
 
 ### Initialize
 
@@ -17,7 +26,7 @@ UserManagerConfig c = new UserManagerConfig();
 		c.setKeyPassword("password"); //key for user's password
 		c.setKeyUsername("username"); //key for user's username
 		c.setSubjectVerifyEmail("Verify your email for AIDEMate"); //subject for the email verification email
-		c.setUsersCollectionURL("https://<dabase-name>.restdb.io/rest/<collection-name>"); replace <database-name> and <collection-name>
+		c.setUsersCollectionURL("https://<dabase-name>.restdb.io/rest/<collection-name>"); //replace <database-name> and <collection-name>
 		c.setVerifyEmailAppName("AIDEMate"); //Verification Email Footer (The <app-name> Team)
 		
 		UserManager.initialize(this, c); //Finally, initialize the UserManager
