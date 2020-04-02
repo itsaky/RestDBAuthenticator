@@ -2,7 +2,7 @@
 # RestDBAuthenticator
 This library helps you to authenticate users using restdb.io database.
 
-You will need to setup restdb.io before using this library. Watch [this](http://youtube.com/itsaky) video to learn what & how to setup.
+You will need to setup restdb.io before using this library.
 
 ## Download
 Add library to your project using gradle
