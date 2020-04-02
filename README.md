@@ -7,10 +7,6 @@ You will need to setup restdb.io before using this library. Watch [this](https:/
 ## Download
 Add library to your project using gradle
 
-Add this to project-level build.gradle
-```
-maven { url 'https://jitpack.io' }
-```
 Add this to module-level build.gradle
 
 ```
