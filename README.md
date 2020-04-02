@@ -14,6 +14,8 @@ Replace with the latest release
 
 ## Initialize
 
+Use this in the Main Activity of the Application.
+
 ```java
 UserManagerConfig c = new UserManagerConfig();
 c.setApiKey("<API Key here>");
@@ -110,6 +112,30 @@ UserManager.signUpUser(user, new SignUpCallback(){
 			//Something went wrong
 			//look for errMessage
 			//response is the response that you got from restdb.io
+		}
+	});
+```
+
+## Send Email Verification Code
+
+You can send an email verification code to the user using ```UserManager.verifyEmail(User, VerifyEmailCallback);```
+
+The ```User`` object must contain the email address
+Ex. You must call ```user.setEmail(String);``` before calling the above method.
+
+```java
+User user = new User();
+user.setEmail("email");
+UserManager.verifyEmail(user, new VerifyEmailCallback(){
+
+		@Override
+		public void onSuccess(int otp) {
+			//tell the user to enter otp and veeify it with this 'otp'
+		}
+
+		@Override
+		public void onFailure(String errMessage) {
+			//check errMessage
 		}
 	});
 ```
