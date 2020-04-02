@@ -146,3 +146,49 @@ UserManager.verifyEmail(user, new VerifyEmailCallback(){
 		}
 	});
 ```
+
+## Update a user
+
+You can update user details using ```UserManager.updateUser(User, UpdateUserCallback);```
+
+The ```User``` object must contain the userId.
+
+```java
+User user = UserManager.getCurrentUser();
+user.setUsername("username");
+UserManager.updateUser(user, new UpdateUserCallback(){
+
+		@Override
+		public void onSuccess(User updatedUser) {
+			//User updated
+			//updatedUser has been logged in
+		}
+
+		@Override
+		public void onFailure(String errMessage) {
+			//check errMessage
+		}
+	});
+```
+
+## Delete a user
+
+Delete a user object using ```UserManager.deleteUser(User, DeleteUserCallback);```
+
+The ```User``` object must constain the userId.
+
+```java
+User user = UserManager.getCurrentUser();
+UserManager.deleteUser(user, new DeleteUserCallback(){
+
+		@Override
+		public void onSuccess() {
+			//User deleted
+		}
+
+		@Override
+		public void onFailure(String errMessage) {
+			//Check errMessage
+		}
+    });
+```
