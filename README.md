@@ -4,15 +4,15 @@ This library helps you to authenticate users using restdb.io database.
 
 You will need to setup restdb.io before using this library. Watch [this](http://youtube.com/itsaky) video to learn what & how to setup.
 
-### Download
+## Download
 Add library to your project using gradle
 ```
 implementation 'com.github.itsaky:RestDBAuthenticator:<latest-verison>'
 ```
-Replace <latest-version> with the latest release
+Replace with the latest release
 
 
-### Initialize
+## Initialize
 
 ```java
 UserManagerConfig c = new UserManagerConfig();
@@ -31,3 +31,12 @@ UserManagerConfig c = new UserManagerConfig();
 		
 		UserManager.initialize(this, c); //Finally, initialize the UserManager
 ```
+
+## Usage
+
+Let's see how to use this.
+
+# Get Current User
+Use ```
+UserManager.getCurrentUser(); ``` to get the currently logged in user.
+This returns null if user is not logged in.
