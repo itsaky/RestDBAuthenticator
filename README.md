@@ -32,11 +32,49 @@ UserManagerConfig c = new UserManagerConfig();
 		UserManager.initialize(this, c); //Finally, initialize the UserManager
 ```
 
-## Usage
-
-Let's see how to use this.
-
-# Get Current User
+## Get Current User
 Use ```UserManager.getCurrentUser();``` to get the currently logged in user.
 
 This returns null if user is not logged in.
+
+## Login user
+
+Create a new ```User``` object, pass the values and call ```UserManager.loginUser(user, LoginCallback);```
+
+```java
+User user = new User();
+		user.setEmail("email");
+		user.setUsername("email");
+		user.setPassword("password");
+		
+		/*
+		
+		The email and username fields must not be empty while loggin in
+		
+		If user only enters email then use this :
+		 user.setEmail("<email>");
+		 user.setUsername("<email>");
+		 
+		If user only enters username then use this :
+		 user.setEmail("<username>");
+		 user.setUsername("<username>");
+		 
+		 You must take care of this
+		
+		*/
+		
+		UserManager.logInUser(user, new LoginCallback(){
+
+				@Override
+				public void onSuccess() {
+					//User logged in
+					//get the logged in user using UserManager.getCurrentUser();
+				}
+
+				@Override
+				public void onFailure(String errMessage) {
+					//Something went wrong
+					//Check the errMessage
+				}
+			});
+```
