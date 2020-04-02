@@ -1,0 +1,28 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+group='edmt.dev'
+version='1.0'
+
+android {
+    compileSdkVersion 27
+
+    defaultConfig {
+        applicationId "com.itsaky.restdbauth.library"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+	implementation 'com.google.code.gson:gson:2.8.1'
+	implementation 'com.squareup.okhttp3:okhttp:4.4.0'
+}
