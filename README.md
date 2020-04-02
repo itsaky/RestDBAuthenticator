@@ -231,3 +231,8 @@ UserManager.getUsers(new GetUserCallback(){
 		}
 	});
 ```
+## Developer
+
+Developed by ```Akash Yadav```
++ [Instagram](http://instagram.com/_mr_developer)
++ [Telegram](http://t.me/itsaky)
