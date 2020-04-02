@@ -1,27 +1,32 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
-group = 'com.github.itsaky'
-version = '1.0'
+
 android {
-    compileSdkVersion 27
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "com.itsaky.restdbauth.library"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode Integer.parseInt(project.VERSION_CODE)
+        versionName project.VERSION_NAME
     }
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable false
+        }
+
+        debug {
+            minifyEnabled false
+            debuggable true
         }
     }
 }
 
 dependencies {
+	compile 'com.squareup.okhttp3:okhttp:4.4.0'
+	compile 'com.google.code.gson:gson:2.8.1'
     compile fileTree(dir: 'libs', include: ['*.jar'])
-	implementation 'com.google.code.gson:gson:2.8.1'
-	implementation 'com.squareup.okhttp3:okhttp:4.4.0'
 }
+
+apply from: '../gradle-mvn-push.gradle'
