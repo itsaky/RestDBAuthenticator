@@ -37,6 +37,6 @@ UserManagerConfig c = new UserManagerConfig();
 Let's see how to use this.
 
 # Get Current User
-Use ```
-UserManager.getCurrentUser(); ``` to get the currently logged in user.
+Use ```UserManager.getCurrentUser();``` to get the currently logged in user.
+
 This returns null if user is not logged in.
