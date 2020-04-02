@@ -6,6 +6,13 @@ You will need to setup restdb.io before using this library. Watch [this](http://
 
 ## Download
 Add library to your project using gradle
+
+Add this to project-level build.gradle
+```
+maven { url 'https://jitpack.io' }
+```
+Add this to module-level build.gradle
+
 ```
 implementation 'com.github.itsaky:RestDBAuthenticator:<latest-verison>'
 ```
@@ -120,7 +127,7 @@ UserManager.signUpUser(user, new SignUpCallback(){
 
 You can send an email verification code to the user using ```UserManager.verifyEmail(User, VerifyEmailCallback);```
 
-The ```User`` object must contain the email address
+The ```User``` object must contain the email address
 Ex. You must call ```user.setEmail(String);``` before calling the above method.
 
 ```java
@@ -130,7 +137,7 @@ UserManager.verifyEmail(user, new VerifyEmailCallback(){
 
 		@Override
 		public void onSuccess(int otp) {
-			//tell the user to enter otp and veeify it with this 'otp'
+			//tell the user to enter otp and verify it with this 'otp'
 		}
 
 		@Override
