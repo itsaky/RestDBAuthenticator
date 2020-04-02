@@ -192,3 +192,42 @@ UserManager.deleteUser(user, new DeleteUserCallback(){
 		}
     });
 ```
+
+## Check User is Registered or not.
+
+You can check if a user is registered with the email address
+
+```java
+UserManager.checkEmailRegistered("email", new CheckEmailCallback(){
+
+		@Override
+		public void onSuccess(boolean isRegistered, User registeredUser) {
+			//isRegistered is true if the collection contains a jser with the provided email address
+			//If the user is registered registeredUser will conatain its properties else it will be null
+		}
+
+		@Override
+		public void onFailure(String err) {
+			//Check err
+		}
+	});
+```
+
+## Get All registered users
+
+Get a list of all registered users
+
+```java
+UserManager.getUsers(new GetUserCallback(){
+
+		@Override
+		public void onSuccess(ArrayList<User> users) {
+			//users contains all the registered users
+		}
+
+		@Override
+		public void onFailure(String err) {
+			//check err
+		}
+	});
+```
