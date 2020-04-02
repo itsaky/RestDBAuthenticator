@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
-group='edmt.dev'
+group='itsaky'
 version='1.0'
 
 android {
