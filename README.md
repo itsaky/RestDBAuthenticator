@@ -78,3 +78,38 @@ UserManager.logInUser(user, new LoginCallback(){
 		}
 	});
 ```
+
+## SignUp a User
+
+Create a new ```User``` object and call ```UserManager.signupUser(user, SignUpCallback);```
+
+```java
+User user = new User();
+user.setEmail("<email>");
+user.setIsEmailVerified(false);
+user.setName("name");
+user.setPassword("pass");
+user.setUsername("username");
+		
+/*
+		
+user.setUserId(String); is necessary only while deleting a user or updating a user
+		
+*/
+		
+UserManager.signUpUser(user, new SignUpCallback(){
+
+		@Override
+		public void onSuccess(User newUser) {
+			//User created
+			//get its property using newUser
+		}
+
+		@Override
+		public void onFailure(String errMessage, String response) {
+			//Something went wrong
+			//look for errMessage
+			//response is the response that you got from restdb.io
+		}
+	});
+```
