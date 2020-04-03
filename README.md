@@ -7,6 +7,12 @@ You will need to setup restdb.io before using this library. Watch [this](https:/
 ## Download
 Add library to your project using gradle
 
+Add this to your project's build.gradle
+
+```
+maven { URL 'https://jitpack.io' }
+```
+
 Add this to module-level build.gradle
 
 ```
@@ -17,7 +23,7 @@ Replace with the latest release
 
 ## Initialize
 
-Use this in the Main Activity of the Application.
+Add this in onCreate of your Application class.
 
 ```java
 UserManagerConfig c = new UserManagerConfig();
@@ -44,7 +50,7 @@ This returns null if user is not logged in.
 
 ## Login user
 
-Create a new ```User``` object, pass the values and call ```UserManager.loginUser(user, LoginCallback);```
+Create a new ```User``` object, pass the values and call ```UserManager.loginUser(Activity, user, LoginCallback);```
 
 ```java
 User user = new User();
@@ -68,7 +74,7 @@ You must take care of this
 		
 */
 		
-UserManager.logInUser(user, new LoginCallback(){
+UserManager.logInUser(this, user, new LoginCallback(){
 
 		@Override
 		public void onSuccess() {
@@ -86,7 +92,7 @@ UserManager.logInUser(user, new LoginCallback(){
 
 ## SignUp a User
 
-Create a new ```User``` object and call ```UserManager.signupUser(user, SignUpCallback);```
+Create a new ```User``` object and call ```UserManager.signupUser(Activity, user, SignUpCallback);```
 
 ```java
 User user = new User();
@@ -102,7 +108,7 @@ user.setUserId(String); is necessary only while deleting a user or updating a us
 		
 */
 		
-UserManager.signUpUser(user, new SignUpCallback(){
+UserManager.signUpUser(this, user, new SignUpCallback(){
 
 		@Override
 		public void onSuccess(User newUser) {
@@ -121,7 +127,7 @@ UserManager.signUpUser(user, new SignUpCallback(){
 
 ## Send Email Verification Code
 
-You can send an email verification code to the user using ```UserManager.verifyEmail(User, VerifyEmailCallback);```
+You can send an email verification code to the user using ```UserManager.verifyEmail(Activity, User, VerifyEmailCallback);```
 
 The ```User``` object must contain the email address
 Ex. You must call ```user.setEmail(String);``` before calling the above method.
@@ -129,7 +135,7 @@ Ex. You must call ```user.setEmail(String);``` before calling the above method.
 ```java
 User user = new User();
 user.setEmail("email");
-UserManager.verifyEmail(user, new VerifyEmailCallback(){
+UserManager.verifyEmail(this, user, new VerifyEmailCallback(){
 
 		@Override
 		public void onSuccess(int otp) {
@@ -145,14 +151,14 @@ UserManager.verifyEmail(user, new VerifyEmailCallback(){
 
 ## Update a user
 
-You can update user details using ```UserManager.updateUser(User, UpdateUserCallback);```
+You can update user details using ```UserManager.updateUser(Activity, User, UpdateUserCallback);```
 
 The ```User``` object must contain the userId.
 
 ```java
 User user = UserManager.getCurrentUser();
 user.setUsername("username");
-UserManager.updateUser(user, new UpdateUserCallback(){
+UserManager.updateUser(this, user, new UpdateUserCallback(){
 
 		@Override
 		public void onSuccess(User updatedUser) {
@@ -169,13 +175,13 @@ UserManager.updateUser(user, new UpdateUserCallback(){
 
 ## Delete a user
 
-Delete a user object using ```UserManager.deleteUser(User, DeleteUserCallback);```
+Delete a user object using ```UserManager.deleteUser(Activity, User, DeleteUserCallback);```
 
 The ```User``` object must constain the userId.
 
 ```java
 User user = UserManager.getCurrentUser();
-UserManager.deleteUser(user, new DeleteUserCallback(){
+UserManager.deleteUser(this, user, new DeleteUserCallback(){
 
 		@Override
 		public void onSuccess() {
@@ -194,7 +200,7 @@ UserManager.deleteUser(user, new DeleteUserCallback(){
 You can check if a user is registered with the email address
 
 ```java
-UserManager.checkEmailRegistered("email", new CheckEmailCallback(){
+UserManager.checkEmailRegistered(this, "email", new CheckEmailCallback(){
 
 		@Override
 		public void onSuccess(boolean isRegistered, User registeredUser) {
@@ -214,7 +220,7 @@ UserManager.checkEmailRegistered("email", new CheckEmailCallback(){
 Get a list of all registered users
 
 ```java
-UserManager.getUsers(new GetUserCallback(){
+UserManager.getUsers(this, new GetUserCallback(){
 
 		@Override
 		public void onSuccess(ArrayList<User> users) {
