@@ -19,6 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import com.itsaky.restdbauth.library.callbacks.CheckEmailCallback;
 import com.itsaky.restdbauth.library.callbacks.GetUserCallback;
+import android.content.Context;
 
 public class UserManager
 {
@@ -27,30 +28,30 @@ public class UserManager
 	private static boolean isLoggedIn = false;
 	private static User user;
 	private static boolean isEmailVerified = false;
-	private static Activity a;
-	
+	private static Context con;
+
 	private static String KEY_EMAIL = "email";
 	private static String KEY_USERNAME = "username";
 	private static String KEY_PASSWORD = "password";
 	private static String KEY_NAME = "name";
 	private static String KEY_EMAIL_VERIFIED = "isEmailVerified";
 	private static final String KEY_UPLOADER_ID = "_id";
-	
+
 	private static UserManagerConfig config;
-	
-	
+
+
 	/* Intialize the UserManager with the activity and the UserManagerConfig */
-	public static void initialize(Activity ac, UserManagerConfig c){
-		a = ac;
+	public static void initialize(Context ac, UserManagerConfig c){
+		con = ac;
 		config = c;
-		sp = PreferenceManager.getDefaultSharedPreferences(a);
+		sp = PreferenceManager.getDefaultSharedPreferences(con);
 		KEY_EMAIL = config.getKeyEmail();
 		KEY_USERNAME = config.getKeyUsername();
 		KEY_NAME = config.getKeyName();
 		KEY_PASSWORD = config.getKeyPassword();
 		KEY_EMAIL_VERIFIED = config.getKeyIsEmailVerified();
 	}
-	
+
 	/* Returns null if the the user is not logged in */
 	public static User getCurrentUser(){
 		username = sp.getString(KEY_USERNAME, null);
@@ -72,8 +73,8 @@ public class UserManager
 
 		return user;
 	}
-	
-	public static User signUpUser(final User u, final SignUpCallback callback){
+
+	public static User signUpUser(final Activity a, final User u, final SignUpCallback callback){
 		new Thread(new Runnable(){
 
 				@Override
@@ -88,7 +89,7 @@ public class UserManager
 						j.put(KEY_EMAIL_VERIFIED, u.isEmailVerified());
 						HashMap<String, Object> k = new HashMap<>();
 						k.put("x-apikey", config.getApiKey());
-						
+
 						RequestNetwork n = new RequestNetwork(a);
 						n.setHeaders(k);
 						n.setParams(j, RequestNetworkController.REQUEST_BODY);
@@ -107,7 +108,7 @@ public class UserManager
 											user.setPassword(o.getString(KEY_PASSWORD));
 											user.setIsEmailVerified(o.getBoolean(KEY_EMAIL_VERIFIED));
 											user.setName(o.getString(KEY_NAME));
-											
+
 											callback.onSuccess(user);
 										} else {
 											if(o.has("message") && o.has("list")){
@@ -131,17 +132,17 @@ public class UserManager
 									callback.onFailure(message, null);
 								}
 							});
-						
+
 					} catch (Exception e){
 						callback.onFailure(e.getMessage(), null);
 					}
 				}
 			}).start();
-			
-			return user;
+
+		return user;
 	}
-	
-	public static User logInUser(final User u, final LoginCallback callback){
+
+	public static User logInUser(final Activity a, final User u, final LoginCallback callback){
 		new Thread(new Runnable(){
 
 				@Override
@@ -237,11 +238,11 @@ public class UserManager
 			}).start();
 		return user;
 	}
-	
-	public static void verifyEmail(final User u, final VerifyEmailCallback callback){
-		verifyUser(u, callback);
+
+	public static void verifyEmail(final Activity a, final User u, final VerifyEmailCallback callback){
+		verifyUser(a, u, callback);
 	}
-	
+
 	private static void loginUser(final User u){
 		//sp = a.getSharedPreferences("user", a.MODE_PRIVATE);
 		SharedPreferences.Editor edit = sp.edit();
@@ -253,7 +254,7 @@ public class UserManager
 		edit.putString(KEY_UPLOADER_ID, u.getUserId());
 		edit.commit();
 	}
-	
+
 	public static void logoutUser(){
 		//sp = a.getSharedPreferences("user", a.MODE_PRIVATE);
 		SharedPreferences.Editor edit = sp.edit();
@@ -266,15 +267,15 @@ public class UserManager
 		edit.commit();
 //		initialize(a);
 	}
-	
+
 	private static int getOtp(){
 		int otp = 0;
 		Random rnd = new Random();
 		otp = 100000 + rnd.nextInt(900000);
 		return otp;
 	}
-	
-	public static User updateUser(final User u, final UpdateUserCallback callback){
+
+	public static User updateUser(final Activity a, final User u, final UpdateUserCallback callback){
 		HashMap<String, Object> k = new HashMap<>();
 		k.put("x-apikey", config.getApiKey());
 
@@ -335,14 +336,14 @@ public class UserManager
 			});
 		return user;
 	}
-	
-	private static void verifyUser(final User u, final VerifyEmailCallback callback){
+
+	private static void verifyUser(final Activity a, final User u, final VerifyEmailCallback callback){
 		HashMap<String, Object> k = new HashMap<>();
 		k.put("x-apikey", config.getApiKey());
 
 		final int OTP = getOtp();
 		final String S_OTP = String.valueOf(OTP);
-		
+
 		HashMap<String, Object> l = new HashMap<>();
 		l.put("to", u.getEmail());
 		l.put("sendername", config.getEmailSenderName());
@@ -382,8 +383,8 @@ public class UserManager
 				}
 			});
 	}
-	
-	public static void getUsers(final GetUserCallback callback){
+
+	public static void getUsers(final Activity a, final GetUserCallback callback){
 		HashMap<String, Object> k = new HashMap<>();
 		k.put("x-apikey", config.getApiKey());
 
@@ -429,8 +430,8 @@ public class UserManager
 				}
 			});
 	}
-	
-	public static void deleteUser(final User u, final DeleteUserCallback callback){
+
+	public static void deleteUser(final Activity a, final User u, final DeleteUserCallback callback){
 		new Thread(new Runnable(){
 
 				@Override
@@ -438,12 +439,12 @@ public class UserManager
 				{
 					HashMap<String, Object> k = new HashMap<>();
 					k.put("x-apikey", config.getApiKey());
-					
+
 					RequestNetwork n = new RequestNetwork(a);
 					n.setHeaders(k);
-					
+
 					final String URL = config.getUsersCollectionURL() + "/" + u.getUserId();
-					
+
 					n.startRequestNetwork(RequestNetworkController.DELETE, URL, "AIDEMate", new RequestNetwork.RequestListener(){
 
 							@Override
@@ -461,22 +462,22 @@ public class UserManager
 				}
 			}).start();
 	}
-	
-	
-	public static void checkEmailRegistered(final String email, final CheckEmailCallback callback){
+
+
+	public static void checkEmailRegistered(final Activity a, final String email, final CheckEmailCallback callback){
 		HashMap<String, Object> k = new HashMap<>();
 		k.put("x-apikey", config.getApiKey());
 
 		RequestNetwork n = new RequestNetwork(a);
 		n.setHeaders(k);
-		
+
 		n.startRequestNetwork(RequestNetworkController.GET, config.getUsersCollectionURL(), "Tag", new RequestNetwork.RequestListener(){
 
 				@Override
 				public void onResponse(String tag, String response, int responseCode)
 				{
 					try {
-						
+
 						JSONArray array = new JSONArray(response);
 						if(array.length() > 0){
 							JSONObject obj = null;
@@ -488,7 +489,7 @@ public class UserManager
 									}
 								}
 							}
-							
+
 							if(obj != null){
 								User u = new User();
 								u.setEmail(obj.getString(KEY_EMAIL));
@@ -504,7 +505,7 @@ public class UserManager
 						} else {
 							callback.onFailure("Email is not registered with us");
 						}
-						
+
 					} catch (Exception e){
 						callback.onFailure("Invalid response from server");
 					}
