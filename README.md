@@ -10,7 +10,7 @@ Add library to your project using gradle
 Add this to your project's build.gradle
 
 ```
-maven { URL 'https://jitpack.io' }
+maven { url 'https://jitpack.io' }
 ```
 
 Add this to module-level build.gradle
